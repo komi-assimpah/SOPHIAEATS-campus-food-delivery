@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order</title>
+    <link href="css/orderPage.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+
+
+<div class="container">
+    <header class="header">
+        <nav>
+            <a class="home" href="index.html">Home</a>
+            <a class="history" href="#">History</a>
+            <a class="account" href="#">Account</a>
+        </nav>
+        <h1 id="restaurant-name"></h1>
+    </header>
+    <main class="main content">
+        <h3>Choose your items</h3>
+        <div class="items" id="items-container"></div>
+    </main>
+    <footer class="checkout">
+        <div>
+            <span class="material-icons">shopping_cart</span>
+            <span id="cart-count">0</span>
+        </div>
+        <p>Total Price: <span id="total-price">0 €</span></p>
+        <a class="checkout-button" id="checkout-button">Go to checkout</a>
+    </footer>
+</div>
+
+<script src="js/orderPage.js" type="module"></script>
+</body>
+</html>

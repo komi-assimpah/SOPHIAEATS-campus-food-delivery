@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Confirmation</title>
+    <link href="css/index.css" rel="stylesheet">
+    <link href="css/checkout.css" rel="stylesheet">
+</head>
+<body>
+<div class="container-confirmation">
+    <header class="header">
+        <h1 id="restaurant-name"></h1>
+    </header>
+    <main class="confirmation-content">
+        <div class="summary">
+            <div class="order-card">
+                <h2 id="order-status"></h2>
+                <div>
+
+                    <label><strong>Total Price</strong> : <input disabled type="text" id="totalAmount"
+                                                                 value="0 €"></label>
+                    <label><strong>Balance</strong> : <input disabled type="text" id="balance-amount"
+                                                                 value="0 €"></label>
+                </div>
+            </div>
+            <div id="group-order-summary">
+                <h2>Group Order's Summary</h2>
+                <div class="order-card-details">
+                    <div>
+                        <h3>Delivery Information</h3>
+                        <p>
+                            <strong>Delivery Address</strong> :
+                            <span id="delivery-address-group">[Loading...]</span>
+                        </p>
+                        <p>
+                            <strong>Delivery Time</strong> :
+                            <span id="delivery-time-group">[Loading...]</span>
+                        </p>
+                    </div>
+                    <div>
+                        <h3>Items Ordered</h3>
+                        <div id="group-subOrder">
+                            <div class="suborder-item">
+                                <p>
+                                    <strong>Restaurant</strong> :
+                                    <span id="suborder-restaurant">[Loading...]</span>
+                                </p>
+                                <div class="items-ordered-group">
+                                    <p>Loading items...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <button id="confirm-group-order">Confirm the order group</button>
+    <button id="back">Back to Home</button>
+
+    <button id="go-account">Go to Account</button>
+</div>
+
+<script src="js/paymentConfirmation.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link href="css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/restaurant.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <nav>
+            <a class="home" href="index.html">Home</a>
+            <a class="history" href="#">History</a>
+            <a class="account" href="account.html">Account</a>
+        </nav>
+        <div class="header-utils">
+            <div class="search">
+                <input placeholder="Search a restaurant" type="text">
+            </div>
+            <div class="filter">
+                <select>
+                    <option>Filter by type of food</option>
+                    <option value="">Fastfood</option>
+                    <option value=""></option>
+                    <option value=""></option>
+                </select>
+                <select>
+                    <option>Filter by Avaibility</option>
+                    <option value="">Opened</option>
+                    <option value="">Closed</option>
+                </select>
+            </div>
+            <div class="group-order">
+                <button id="create-group-order">Create Group Order</button>
+                <button id="join-group-order">Join Group Order</button>
+            </div>
+        </div>
+    </header>
+    <main class="content">
+        <section>
+            <a href="restaurantList.html" class="back-to-restaurant">
+                <h1>Restaurants</h1>
+                <span class="material-icons">arrow_forward</span>
+            </a>
+            <div class="restaurants" id="restaurant-list">
+                <!-- Restaurant example / template -->
+                <div class="restaurant-card">
+                    <h2>Restaurant 1</h2>
+                    <div class="restaurant-card-details">
+                        <p>Fastfood</p>
+                        <p>Opened</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<div class="popup" id="popup-join-group">
+    <span class="close" id="close-join-group">&times;</span>
+    <div class="popup-content">
+        <div>
+            <label for="group-identifier">Group identifier : </label>
+            <input id="group-identifier" placeholder="Enter the group identifier" type="text">
+        </div>
+        <button id="group-joining">Join Group</button>
+    </div>
+</div>
+
+<div class="popup" id="popup-index-restaurant">
+    <span class="close" id="close-index-restaurant">&times;</span>
+    <div class="popup-content">
+        <div class="delivery-details">
+            <select class="delivery-address">
+                <option value="">Choose a delivery address</option>
+            </select>
+            <select class="delivery-time">
+                <option value="">Choose a delivery time</option>
+            </select>
+        </div>
+        <button id="confirm-delivery">Confirm</button>
+    </div>
+</div>
+
+<div class="popup" id="popup-create-group">
+    <span class="close" id="close-create-group">&times;</span>
+    <div class="popup-content">
+        <div class="delivery-details">
+            <select class="delivery-address-group">
+                <option value="">Choose a delivery address</option>
+            </select>
+            <select class="all-delivery-time">
+                <option value="">Choose a delivery time</option>
+            </select>
+        </div>
+        <button id="group-creating">Create</button>
+    </div>
+</div>
+
+<div class="popup" id="popup-group-identifier">
+    <span class="close" id="close-group-identifier">&times;</span>
+    <div class="popup-content">
+        <div>
+            <p>Your group identifier is : </p>
+            <input id="your-identifier" type="text" value="" disabled>
+        </div>
+        <button id="confirm-identifier">OK</button>
+    </div>
+</div>
+
+<script src="js/index.js" type="module"></script>
+</body>
+</html>

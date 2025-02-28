@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+    <link href="css/index.css" rel="stylesheet">
+    <link href="css/checkout.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <nav>
+            <a class="home" href="index.html">Home</a>
+            <a class="history" href="#">History</a>
+            <a class="account" href="#">Account</a>
+        </nav>
+        <h1 id="restaurant-name"></h1>
+        <button id="close-group-order" style="display: none">Close the order group</button>
+
+    </header>
+    <main class="content">
+        <section>
+            <div class="summary">
+                <div class="order-card">
+                    <h2>Order's Summary</h2>
+                    <div class="order-card-details">
+                        <div>
+                            <h3>Delivery Information</h3>
+                            <p>
+                                <strong>Delivery Address</strong> :
+                                <span id="delivery-address">[Loading...]</span>
+                            </p>
+                            <p>
+                                <strong>Delivery Time</strong> :
+                                <span id="delivery-time">[Loading...]</span>
+                            </p>
+                        </div>
+                        <div>
+                            <h3>Items Ordered</h3>
+                            <div class="items-ordered">
+                                <p>Loading items...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label>
+                            <strong>Total Price</strong> :
+                            <input id="total-price" type="text" value="0 €" disabled>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="method">
+                <div class="payment-method">
+                    <h3>Payment method</h3>
+                    <label for="credit-card">
+                        <input id="credit-card" type="radio" name="payment-method"> Credit Card
+                    </label>
+                    <label for="paypal">
+                        <input id="paypal" type="radio" name="payment-method"> Paypal
+                    </label>
+                </div>
+                <button class="pay">Pay the order</button>
+            </div>
+        </section>
+    </main>
+</div>
+
+<div class="popup" id="popup-payment">
+    <span class="close" id="close-checkout">&times;</span>
+    <div class="popup-content">
+        <div>
+            <p>Redirecting to the payment page ...</p>
+            <p>Please wait 5 seconds</p>
+
+            <p>Don't forget to hydrate yourself</p>
+        </div>
+    </div>
+</div>
+
+<script src="js/checkout.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link href="css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/create.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+<form class="container" id="create-form" method="post">
+    <div>
+        <label for="name">Name : </label>
+        <input id="name" placeholder="Enter your name" type="text" autofocus autocomplete="on" required>
+    </div>
+    <div>
+        <label for="email">Email : </label>
+        <input id="email" placeholder="Enter your email" type="email" autocomplete="on" required>
+    </div>
+    <div>
+        <label for="password">Password : </label>
+        <input id="password" placeholder="Enter your password" type="password" autocomplete="off" required>
+    </div>
+    <button id="create-account" type="submit">Créer son compte</button>
+</form>
+<p class="go-login">Déjà un compte ? <button><a href="login.html">Se connecter</a></button></p>
+
+<script src="js/create.js" type="module"></script>
+</body>
+</html>

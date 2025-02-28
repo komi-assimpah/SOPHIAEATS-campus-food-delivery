@@ -1,0 +1,98 @@
+.orders{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+h1{
+    text-align: center;
+}
+
+.order-card{
+    width: auto;
+    margin: 20px;
+    border: 2px solid #251B37;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.order-card-details{
+    display: flex;
+    justify-content: space-around;
+    text-align: justify;
+}
+
+.order-card input{
+    width: 50px;
+    margin: 10px;
+    padding: 5px;
+    background: #FFCACA;
+    border: 1px solid #251B37;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.items-ordered{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+
+.method{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+
+}
+
+.payment-method{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 2;
+    text-align: center;
+}
+
+.content{
+    margin-bottom: 80px;
+}
+
+.content h3{
+    text-align: center;
+}
+
+
+.pay, #close-group-order, #confirm-group-order, #back, #go-account{
+    font-size: 20px;
+    font-weight: bold;
+    border: 2px solid #251B37;
+    border-radius: 10px;
+    height: 10%;
+    margin-left: 20px;
+
+}
+
+.container-confirmation{
+    text-align: center;
+    margin-top: 5%;
+}
+
+.container-confirmation button{
+    border: 2px solid #251B37;
+    margin-top: 20px;
+}
+
+.container-confirmation  button a{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#group-order-summary, #confirm-group-order{
+    display: none;
+}

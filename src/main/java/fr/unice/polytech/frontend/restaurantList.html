@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurants</title>
+    <link href="css/restaurant.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <nav>
+            <a class="home" href="index.html">Home</a>
+            <a class="history" href="#">History</a>
+            <a class="account" href="#">Account</a>
+        </nav>
+        <div class="header-utils">
+            <div class="search">
+                <input placeholder="Search a restaurant" type="text">
+            </div>
+            <div class="filter">
+                <select>
+                    <option>Filter by type of food</option>
+                    <option value="">Fastfood</option>
+                    <option value=""></option>
+                    <option value=""></option>
+                </select>
+            </div>
+            <button id="group-joined">Group Order Joined</button>
+        </div>
+    </header>
+    <main class="content">
+        <section>
+            <h1>Restaurants</h1>
+            <div class="restaurants" id="restaurant-list">
+                <!-- Restaurant example / template -->
+                <div class="restaurant-card">
+                    <h2>Restaurant 1</h2>
+                    <div class="restaurant-card-details">
+                        <p>Fastfood</p>
+                        <p>Opened</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<div class="popup" id="popup-restaurant">
+    <span class="close" id="close-restaurant">&times;</span>
+    <div class="popup-content">
+        <div class="delivery-details">
+            <select class="delivery-address">
+                <option>Choose a delivery address</option>
+            </select>
+            <select class="delivery-time">
+                <option>Choose a delivery time</option>
+            </select>
+        </div>
+        <button id="confirm-delivery">Confirm</button>
+    </div>
+</div>
+
+<script src="js/restaurant.js" type="module"></script>
+</body>
+</html>

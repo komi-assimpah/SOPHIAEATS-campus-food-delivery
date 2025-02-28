@@ -1,0 +1,30 @@
+main {
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+.user-details {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.actions {
+    text-align: center;
+}
+
+button:hover {
+    background-color: #251B37;
+}
