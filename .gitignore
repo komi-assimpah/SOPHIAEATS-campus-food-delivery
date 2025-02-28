@@ -48,4 +48,5 @@ pom.xml.releaseBackup
 pom.xml.versionsBackup
 pom.xml.next
 release.properties
-dependency-reduced-pom.xml
+dependency-reduced-pom.xmlsrc/main/resources/sophiaeats-firebase.json
+src/main/resources/sophiaeats-firebase.json
