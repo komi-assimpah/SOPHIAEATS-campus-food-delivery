@@ -1,0 +1,862 @@
+openapi: 3.0.3
+info:
+  title: SophiaEats API
+  description: API permettant la gestion des restaurants, des menus et des horaires.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api
+    description: Serveur local
+
+paths:
+  /restaurants:
+    get:
+      summary: Récupère tous les restaurants ou recherche par nom
+      parameters:
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Nom du restaurant à rechercher
+      responses:
+        '200':
+          description: Liste des restaurants
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Restaurant'
+        '404':
+          description: Aucun restaurant trouvé avec ce nom
+        '500':
+          description: Erreur interne du serveur
+    
+    post:
+      summary: Crée un nouveau restaurant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewRestaurant'
+      responses:
+        '201':
+          description: Restaurant créé avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Restaurant'
+        '400':
+          description: Données invalides
+        '500':
+          description: Erreur interne du serveur
+
+
+  /restaurants/{restaurantId}:
+    get:
+      summary: Récupère un restaurant par son ID
+      parameters:
+        - name: restaurantId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Identifiant unique du restaurant
+      responses:
+        '200':
+          description: Détails du restaurant
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Restaurant'
+        '404':
+          description: Restaurant introuvable
+        '500':
+          description: Erreur interne du serveur
+
+
+  /restaurants/available:
+    get:
+      summary: Récupère les restaurants disponibles ouvert actuellement
+      responses:
+        '200':
+          description: Liste des restaurants disponibles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Restaurant'
+        '500':
+          description: Erreur interne du serveur
+
+
+  /restaurants/{restaurantId}/menu:
+    put:
+      summary: Met à jour le menu d’un restaurant
+      parameters:
+        - name: restaurantId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Identifiant unique du restaurant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                menu:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/MenuItem'
+      responses:
+        '200':
+          description: Menu mis à jour avec succès
+        '404':
+          description: Restaurant introuvable
+        '400':
+          description: Données invalides
+        '500':
+          description: Erreur interne du serveur
+
+
+  /restaurants/{restaurantId}/schedule:
+    post:
+      summary: Crée un nouvel horaire pour un restaurant
+      parameters:
+        - name: restaurantId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Identifiant unique du restaurant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Schedule'
+      responses:
+        '201':
+          description: Horaire créé avec succès
+        '404':
+          description: Restaurant introuvable
+        '400':
+          description: Données invalides
+        '500':
+          description: Erreur interne du serveur
+
+
+  /restaurants/{restaurantId}/schedule/{scheduleId}:
+    put:
+      summary: Met à jour un horaire d’un restaurant
+      parameters:
+        - name: restaurantId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Identifiant unique du restaurant
+        - name: scheduleId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Identifiant unique de l’horaire
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Schedule'
+      responses:
+        '200':
+          description: Horaire mis à jour avec succès
+        '404':
+          description: Restaurant ou horaire introuvable
+        '400':
+          description: Données invalides
+        '500':
+          description: Erreur interne du serveur
+
+
+  /locations:
+    get:
+      summary: Récupère toutes les localisations
+      responses:
+        '200':
+          description: Liste des localisations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeliveryLocation'
+        '500':
+          description: Erreur interne du serveur
+    post:
+      summary: Crée une nouvelle localisation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeliveryLocationDTO'
+      responses:
+        '201':
+          description: Localisation créée
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryLocation'
+        '400':
+          description: Requête invalide
+        '409':
+          description: La localisation existe déjà
+        '500':
+          description: Erreur interne du serveur
+
+
+  /locations/name:
+    get:
+      summary: Recherche des localisations par nom
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Nom de la localisation à rechercher
+      responses:
+        '200':
+          description: Localisations trouvées
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeliveryLocation'
+        '404':
+          description: Aucune localisation trouvée avec ce nom
+
+
+  /locations/{locationId}:
+    get:
+      summary: Récupère une localisation par son ID
+      parameters:
+        - name: locationId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Identifiant unique de la localisation
+      responses:
+        '200':
+          description: Localisation trouvée
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryLocation'
+        '404':
+          description: Localisation non trouvée
+
+
+  /orders:
+    post:
+      summary: Créer une nouvelle commande
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderRequest'
+      responses:
+        '201':
+          description: Commande créée
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          description: Requête invalide
+        '500':
+          description: Erreur interne du serveur
+
+  /orders/user/{userId}:
+    get:
+      summary: Récupérer les commandes d'un utilisateur
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Liste des commandes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+        '404':
+          description: Aucune commande trouvée
+
+  /orders/{orderId}:
+    get:
+      summary: Récupérer une commande par son ID
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Détails de la commande
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '404':
+          description: Commande non trouvée
+
+  /orders/{orderId}/items:
+    put:
+      summary: Ajouter un item à une commande
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddOrderItemRequest'
+      responses:
+        '200':
+          description: Item ajouté à la commande
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '404':
+          description: Commande non trouvée
+
+  /orders/{orderId}/placement:
+    get:
+      summary: Placer une commande
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Commande placée avec succès
+        '404':
+          description: Commande non trouvée
+        '500':
+          description: Erreur lors du placement de la commande
+
+  /orders/{orderId}/payment:
+    get:
+      summary: Payer une commande
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Paiement effectué avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '404':
+          description: Commande non trouvée
+        '500':
+          description: Erreur lors du paiement
+
+
+  /orders/{restaurantId}/times:
+    get:
+      summary: Récupérer les horaires de livraison disponibles
+      parameters:
+        - name: restaurantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Liste des horaires disponibles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  format: date-time
+        '500':
+          description: Erreur interne du serveur
+
+  /orders/{restaurantId}/items:
+    get:
+      summary: Récupérer les items du menu disponibles
+      parameters:
+        - name: restaurantId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: deliveryDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+          description: Date et heure de livraison souhaitée
+      responses:
+        '200':
+          description: Liste des items disponibles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MenuItem'
+        '500':
+          description: Erreur interne du serveur
+
+
+  /groupOrders:
+    get:
+      summary: Récupérer toutes les commandes de groupe
+      responses:
+        '200':
+          description: Liste des commandes de groupe
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GroupOrder'
+        '500':
+          description: Erreur interne du serveur
+
+  /groupOrders/create:
+    post:
+      summary: Créer une nouvelle commande de groupe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - orderID
+                - locationID
+              properties:
+                orderID:
+                  type: string
+                  description: ID de la commande initiale
+                locationID:
+                  type: string
+                  description: ID du lieu de livraison
+                deliveryTime:
+                  type: string
+                  format: date-time
+                  description: Heure de livraison souhaitée (optionnel)
+      responses:
+        '201':
+          description: Commande de groupe créée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  groupID:
+                    type: string
+                  message:
+                    type: string
+        '400':
+          description: Paramètres invalides
+        '500':
+          description: Erreur interne du serveur
+
+  /groupOrders/group/{groupID}:
+    get:
+      summary: Récupérer une commande de groupe par son ID
+      parameters:
+        - name: groupID
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Identifiant unique de la commande de groupe
+      responses:
+        '200':
+          description: Détails de la commande de groupe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupOrder'
+        '404':
+          description: Commande de groupe non trouvée
+        '500':
+          description: Erreur interne du serveur
+
+  /groupOrders/join/{groupID}:
+    put:
+      summary: Rejoindre une commande de groupe
+      parameters:
+        - name: groupID
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - orderID
+              properties:
+                orderID:
+                  type: string
+                  description: ID de la commande à ajouter au groupe
+      responses:
+        '200':
+          description: A rejoint le groupe avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          description: Requête invalide
+        '500':
+          description: Erreur interne du serveur
+
+
+  /groupOrders/orderGroup:
+    get:
+      summary: Trouver le groupe d'une sous-commande
+      parameters:
+        - name: orderID
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Groupe trouvé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupOrder'
+        '404':
+          description: Groupe non trouvé
+
+  /groupOrders/complete:
+    put:
+      summary: Compléter une commande de groupe
+      parameters:
+        - name: orderID
+          in: query
+          required: true
+          schema:
+            type: string
+          description: ID de la commande de groupe
+      responses:
+        '200':
+          description: Commande de groupe complétée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          description: Requête invalide
+        '404':
+          description: Commande non trouvée
+        '500':
+          description: Erreur interne du serveur
+
+  /groupOrders/validate:
+    put:
+      summary: Valider une commande de groupe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - orderID
+              properties:
+                orderID:
+                  type: string
+                  description: ID de la commande de groupe
+                deliveryTime:
+                  type: string
+                  format: date-time
+                  description: Heure de livraison demandée
+                possibleTime:
+                  type: string
+                  format: date-time
+                  description: Heure de livraison possible la plus proche
+      responses:
+        '200':
+          description: Commande de groupe validée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          description: Requête invalide
+        '404':
+          description: Commande non trouvée
+        '500':
+          description: Erreur interne du serveur
+
+  /groupOrders/confirm:
+    put:
+      summary: Confirmer une commande de groupe
+      parameters:
+        - name: orderID
+          in: query
+          required: true
+          schema:
+            type: string
+          description: ID de la commande de groupe
+      responses:
+        '200':
+          description: Commande de groupe confirmée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          description: Requête invalide
+        '404':
+          description: Commande non trouvée
+        '500':
+          description: Erreur interne du serveur
+
+  /groupOrders/dropSub:
+    put:
+      summary: Retirer une sous-commande d'un groupe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - orderID
+              properties:
+                orderID:
+                  type: string
+                  description: ID de la sous-commande à retirer
+      responses:
+        '200':
+          description: Sous-commande retirée avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          description: Requête invalide
+        '404':
+          description: Sous-commande non trouvée
+        '500':
+          description: Erreur interne du serveur
+
+components:
+  schemas:
+    Restaurant:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifiant unique du restaurant
+        name:
+          type: string
+          description: Nom du restaurant
+        address:
+          $ref: '#/components/schemas/Address'
+    NewRestaurant:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nom du restaurant
+        address:
+          $ref: '#/components/schemas/Address'
+    Address:
+      type: object
+      properties:
+        street:
+          type: string
+        city:
+          type: string
+        zipCode:
+          type: string
+        country:
+          type: string
+    MenuItem:
+      type: object
+      properties:
+        name:
+          type: string
+        price:
+          type: number
+          format: float
+    Schedule:
+      type: object
+      properties:
+        day:
+          type: string
+          enum:
+            - MONDAY
+            - TUESDAY
+            - WEDNESDAY
+            - THURSDAY
+            - FRIDAY
+            - SATURDAY
+            - SUNDAY
+        startTime:
+          type: string
+          format: time
+        endTime:
+          type: string
+          format: time
+        numberOfWorkingStaff:
+          type: integer
+    DeliveryLocation:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifiant unique de la localisation
+        name:
+          type: string
+          description: Nom de la localisation
+        address:
+          $ref: '#/components/schemas/Address'
+    DeliveryLocationDTO:
+      type: object
+      required:
+        - name
+        - address
+      properties:
+        name:
+          type: string
+          description: Nom de la localisation
+        address:
+          $ref: '#/components/schemas/Address'
+    CreateOrderRequest:
+      type: object
+      required:
+        - restaurantId
+        - userId
+        - deliveryLocationId
+        - deliveryTime
+      properties:
+        restaurantId:
+          type: string
+        userId:
+          type: string
+        deliveryLocationId:
+          type: string
+        deliveryTime:
+          type: string
+          format: date-time
+    AddOrderItemRequest:
+      type: object
+      required:
+        - menuItemId
+        - quantity
+      properties:
+        menuItemId:
+          type: string
+        quantity:
+          type: integer
+          minimum: 1
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        restaurantId:
+          type: string
+        deliveryLocationId:
+          type: string
+        deliveryTime:
+          type: string
+          format: date-time
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        status:
+          type: string
+          enum: [CREATED, PLACED, PAID, CANCELLED]
+    OrderItem:
+      type: object
+      properties:
+        menuItemId:
+          type: string
+        quantity:
+          type: integer
+        price:
+          type: number
+          format: float
+    GroupOrder:
+      type: object
+      properties:
+        id:
+          type: string
+        restaurantId:
+          type: string
+        deliveryLocationId:
+          type: string
+        deliveryTime:
+          type: string
+          format: date-time
+        status:
+          type: string
+        subOrders:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
